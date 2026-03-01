@@ -80,14 +80,14 @@ The pipeline generates the following insights:
 
 ## 📂 Project Structure
 
-```text
+```
 .
 ├── 1_Fetching_Data.py   # Data Extraction Script
 ├── 2_Analysis.py        # Data Cleaning & Visualization Script
+├── users.csv            # Generated Dataset (Output of Fetching)
 ├── Dockerfile           # Container Configuration
 ├── requirements.txt     # Python Dependencies
 └── plots/               # Output directory for .png files
-
 ```
 
 
