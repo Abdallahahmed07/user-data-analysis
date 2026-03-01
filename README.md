@@ -1,82 +1,105 @@
-# User Data Analysis Project
 
-![Python](https://img.shields.io/badge/Python-Blue?logo=python&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?logo=matplotlib&logoColor=white)
-![Seaborn](https://img.shields.io/badge/Seaborn-4C72B0?logo=seaborn&logoColor=white)
-![Requests](https://img.shields.io/badge/Requests-HTTP%20Client-20232A?logo=requests&logoColor=white)
-![JSON](https://img.shields.io/badge/Data-JSON-black?logo=json&logoColor=white)
+# 📊 User Data ETL & Analytics Pipeline 
 
-## Description
-This project performs **exploratory data analysis (EDA)** on user data fetched from the **DummyJSON API**. It demonstrates the full workflow of **data fetching, cleaning, analysis, and visualization** using Python.
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Seaborn](https://img.shields.io/badge/Seaborn-4C72B0?style=for-the-badge&logo=python&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-%23ffffff.svg?style=for-the-badge&logo=Matplotlib&logoColor=black)
+![Requests](https://img.shields.io/badge/Requests-FF6633?style=for-the-badge&logo=python&logoColor=white)
 
-The dataset contains **208 users**, including information such as age, gender, height, weight, role, and address. The project explores demographic patterns, distributions, and relationships between numeric variables.
+A containerized Python project that automates the journey from raw API data to polished visual insights. This pipeline handles data extraction, cleaning, and statistical visualization using a "plug-and-play" Docker environment.
 
-**Key features:**
-- Data fetching from API in batches  
-- Data cleaning and preparation (handling missing values, extracting country and city)  
-- Summary statistics for numeric and categorical columns  
-- Visual analysis with **Seaborn** and **Matplotlib**  
-
----
-
-## Tools & Libraries
-- Python 3.x  
-- pandas  
-- seaborn  
-- matplotlib  
-- requests  
-- json  
-
----
-
-
-## Visualizations
-
-### 1. Average Age by Role
-![avg_age_by_role](https://github.com/user-attachments/assets/c6996348-9334-430e-9005-50c739ed5d1f)
-
-
-### 2. Average Age by Gender
-![avg_age](https://github.com/user-attachments/assets/55c1e531-3134-471f-aa9f-6f0ec8092881)
-
-
-### 3. Number of Users per Gender
-![users_per_gender](https://github.com/user-attachments/assets/e4c77143-2479-4983-857d-19de35f2d061)
-
-
-### 4. Top 10 Cities with the Most Users
-![top_10_cities](https://github.com/user-attachments/assets/07d6880a-abc2-4491-9615-f22dd35055f5)
-
-
-### 5. Height Distribution by Role
-![Avg_height](https://github.com/user-attachments/assets/9690be13-5fef-4d3d-a7a2-c98a0fbc09a7)
-
-
-### 6. Weight Distribution by Role
-![avg_weight](https://github.com/user-attachments/assets/66d9399d-d3f2-4423-9875-7808f0bf7bf1)
-
-
-### 7. Relationship Between Age and Height
-![AGE_HEIGHT](https://github.com/user-attachments/assets/ddb66027-ff93-4fcd-8842-4171aafa3373)
-
-
-### 8. Relationship Between Age and Weight
-![AGE_WEIGHT](https://github.com/user-attachments/assets/22cb9690-cd05-4875-9dd2-dca20cc2f276)
 
 
 ---
 
-## How to Run
-1. Install required packages.
-2. Fetch user data:
-   - python 1_Fetching_Data.py
-4. Perform exploratory analysis:
-   - python 2_EDA.py
-6. Generate visualizations:
-   - python 3_Analysis.py
+## 🚀 How the Project Works
+
+The project is split into two main phases to ensure a clean separation between data retrieval and data analysis:
+
+1.  **Extraction (`1_Fetching_Data.py`):**  Connects to the **DummyJSON API**.
+    * Fetches user records in batches using pagination logic.
+    * Saves the raw dataset into a structured `users.csv` file.
+
+2.  **Analysis (`2_Analysis.py`):**  Loads the CSV and performs data cleaning (e.g., dropping `maidenName`, flattening address fields).
+    * Executes statistical analysis across various demographics like age, gender, and location.
+
+3.  **Output:**  The script automatically generates **8 data visualizations** including bar charts, histograms, and scatter plots.
+    * Results are saved directly into the `/plots` directory.
+
+---
+
+## 📦 How to Run
+
+Follow these steps to pull the image and run the analysis on your local machine using Docker.
+
+### 1. Pull the Image
+Download the latest version from Docker Hub:
+```bash
+docker pull abdallahahmed7/python_project:v1
+
+```
+
+### 2. Verify the Image
+
+Ensure the image is loaded in your local environment:
+
+```bash
+docker images
+
+```
+
+### 3. Run the Container
+
+Run the container with a **volume mount** to save the generated plots directly to your host machine:
+
+```bash
+docker run -itd --name project_container -v $(pwd)/plots:/app/plots abdallahahmed7/python_project:v1
+
+```
+
+> **💡 Pro Tip:** The `-v $(pwd)/plots:/app/plots` flag mounts your local "plots" folder to the container. Wait a few seconds after running, and you will see the `.png` files appear in your local directory!
+
+---
+
+## 📊 Generated Visualizations
+
+The pipeline generates the following insights:
+
+* **Average Age by Role** (Bar Chart)
+* **Average Age by Gender** (Bar Chart)
+* **User Count per Gender** (Count Plot)
+* **Top 10 Cities with Most Users** (Bar Chart)
+* **Height Distribution** (Histogram with KDE)
+* **Weight Distribution** (Histogram with KDE)
+* **Age vs. Height Correlation** (Scatter Plot)
+* **Age vs. Weight Correlation** (Scatter Plot)
+
+---
+
+## 📂 Project Structure
+
+```text
+.
+├── 1_Fetching_Data.py   # Data Extraction Script
+├── 2_Analysis.py        # Data Cleaning & Visualization Script
+├── Dockerfile           # Container Configuration
+├── requirements.txt     # Python Dependencies
+└── plots/               # Output directory for .png files
+
+```
 
 
+
+## 👨‍💻 Author
+
+**Abdallah Ahmed**
+
+*Python Developer | Data Enthusiast*
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/abdallahahmed7)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/AbdallahAhmed7)
 
 
 
